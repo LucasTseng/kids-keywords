@@ -1,0 +1,12 @@
+node_modules/
+.verify/
+npm-debug.log*
+*.log
+/my.md
+
+# 由构建脚本生成，不入库
+/data/vocabulary.sqlite
+/vendor/
+
+# Electron 桌面包构建产物
+/release/

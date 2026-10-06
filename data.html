@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据维护</title>
+  <link rel="stylesheet" href="app/style.css">
+</head>
+<body>
+  <div class="maintain">
+    <div class="maintain-top">
+      <a class="btn btn-ghost" href="index.html">← 返回首页</a>
+      <h1 class="maintain-title">📂 数据维护</h1>
+    </div>
+
+    <div class="maintain-body">
+      <div class="card maintain-hint">
+        <h2>使用说明</h2>
+        <ol>
+          <li>点击「下载模板」获取 Excel 模板，按列填写词汇与短句。</li>
+          <li>前四列为固定列：<b>原文</b>（英文）、<b>翻译</b>（中文）、<b>年级</b>、<b>所属单元</b>。可写作英文名 content / translation / grade / unit。</li>
+          <li>除此以外的任意列，都会被识别为「动态筛选字段」，导入后首页会自动生成对应的筛选条件。</li>
+          <li>点击「导入 Excel」选择文件后，会<b>用新数据整体替换</b>当前题库（增、删、改均通过编辑 Excel 后重新导入实现，原数据将被覆盖）。</li>
+          <li>成绩记录不受导入影响，始终保留。</li>
+          <li>所有变更仅保存在当前浏览器（本地），换浏览器/设备需重新导入。</li>
+        </ol>
+      </div>
+
+      <div class="card maintain-actions">
+        <button class="btn" id="btn-template">⬇ 下载模板</button>
+        <button class="btn" id="btn-export">⬇ 导出数据</button>
+        <label class="btn btn-primary" for="file-import">⬆ 导入 Excel</label>
+        <input type="file" id="file-import" accept=".xlsx,.xls" hidden>
+      </div>
+
+      <div class="card maintain-stat" id="maintain-stat">
+        <div class="empty-tip">统计加载中…</div>
+      </div>
+
+      <div class="card maintain-preview">
+        <h2>数据预览 <span class="muted" id="preview-count"></span></h2>
+        <div class="maintain-table-wrap" id="preview">
+          <div class="empty-tip">预览加载中…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="maintain-toast hidden" id="toast"></div>
+
+  <script src="vendor/sql-wasm-browser.js"></script>
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script type="module" src="app/data-maintain.js"></script>
+</body>
+</html>

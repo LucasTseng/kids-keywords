@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>帮助 · 指法教学组件说明</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="打字练习">
+  <link rel="stylesheet" href="./app/style.css">
+  <link rel="stylesheet" href="./dist/vkeyboardhand.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: linear-gradient(160deg, #f6f8fc 0%, #eef2f8 100%); font-family: "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color: #23272f; display: flex; flex-direction: column; align-items: center; padding: 24px 16px 60px; }
+    .page-head { text-align: center; margin-bottom: 28px; }
+    .page-head h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: 0.5px; }
+    .page-head p { margin: 0; color: #6b7280; font-size: 14px; }
+    .demo-card { width: 100%; max-width: 780px; background: #fff; border: 1px solid #e5e9f2; border-radius: 16px; box-shadow: 0 18px 50px rgba(31, 45, 77, 0.1); padding: 36px 28px 48px; }
+    .demo-card + .demo-card { margin-top: 24px; }
+    .demo-title { margin: 0 0 8px; font-size: 17px; text-align: center; }
+    .code-title { margin: 26px 0 8px; font-size: 14px; color: #6b7280; }
+    .code-block { background: #1e2430; color: #dbe4f0; border-radius: 10px; padding: 14px 16px; font-size: 12.5px; line-height: 1.65; overflow-x: auto; }
+    .code-block code { font-family: "Cascadia Mono", Consolas, "Courier New", monospace; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; margin-bottom: 26px; }
+    .toolbar button { border: 1px solid #d8dee9; background: #fff; color: #374151; border-radius: 999px; padding: 7px 16px; font-size: 13px; cursor: pointer; transition: all 0.18s ease; }
+    .toolbar button:hover { border-color: #79bbff; color: #1d63c9; }
+    .toolbar button.active { background: #79bbff; border-color: #79bbff; color: #fff; }
+    .hint { text-align: center; color: #9aa3b2; font-size: 12px; margin-top: 34px; }
+    .hint kbd { background: #f1f4f9; border: 1px solid #d8dee9; border-bottom-width: 2px; border-radius: 5px; padding: 1px 7px; font-size: 11px; color: #4b5563; }
+    .usage-list { font-size: 14px; color: #374151; line-height: 1.8; margin: 8px 0 0; padding-left: 18px; }
+    .usage-list li { margin-bottom: 6px; }
+    .vk-hand { margin-top: 8px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="help-top" style="position: sticky; top: 0; width: 100%; max-width: 780px; z-index: 10;">
+    <a class="btn btn-ghost" href="index.html">← 返回首页</a>
+  </div>
+
+  <header class="page-head">
+    <h1>⌨️ vkeyboardhand · 帮助</h1>
+    <p>SVG 键盘图 + SVG 手势图 + JavaScript 事件驱动 · 交互式指法教学组件。纯 HTML + JS 实现、零依赖，兼容 Vue / React / Angular 等前端框架</p>
+  </header>
+
+  <main class="demo-card">
+    <h2 class="demo-title">使用说明</h2>
+    <ul class="usage-list">
+      <li><strong>打字练习</strong>：看英文打英文，下方键盘与手势实时联动，练指法的同时记住拼写。正确字符变绿，输入错误会标红且无法继续，全部打对自动进入下一题。可用两侧按钮或键盘 <kbd>←</kbd> <kbd>→</kbd> 切换。</li>
+      <li><strong>背默练习</strong>：只看中文默写英文，下划线数量提示字符总数（含空格与标点）。进入即计时，逐题作答，回车或方向键切换、鼠标点题号跳转；答完点「提交」自动评分并记录成绩。</li>
+      <li><strong>成绩</strong>：提交前输入任意用户名即可，无账号无登录。成绩保存在浏览器本地，可在首页「历史成绩」查看。</li>
+    </ul>
+  </main>
+
+  <main class="demo-card">
+    <h2 class="demo-title">键盘实时联动（指法）</h2>
+    <div class="toolbar">
+      <button data-theme="colorful" class="active">彩虹</button>
+      <button data-theme="bone">骨白</button>
+      <button data-theme="dark">暗色</button>
+      <button data-theme="robot">机器人</button>
+      <button data-theme="kingfish">帝王鱼</button>
+      <button data-theme="milk">奶色</button>
+      <span style="width:1px;height:18px;background:#e5e9f2;display:inline-block"></span>
+      <button id="btn-click">点击演示：开</button>
+      <button id="btn-hand-both">双手常显：关</button>
+      <button id="btn-reset">重置</button>
+    </div>
+
+    <div id="vk-demo"></div>
+    <p class="hint">
+      直接在键盘上打字即可联动 <kbd>Shift</kbd> <kbd>Alt</kbd> 等组合键
+      · 也可用鼠标点击键位演示 · 顶部按钮切换主题
+    </p>
+
+    <h3 class="code-title">代码用法（Code Usage）</h3>
+    <pre class="code-block"><code>&lt;div id="vk-demo"&gt;&lt;/div&gt;
+&lt;script&gt;
+  VKeyboardHand.create('#vk-demo', {
+    keyboard: './svg/keyboard.svg',
+    hand: './svg/hand.svg',
+    theme: 'colorful'
+  });
+&lt;/script&gt;</code></pre>
+  </main>
+
+  <main class="demo-card">
+    <h2 class="demo-title">实例 2 · 固定演示按键 Y（关闭键盘监听）</h2>
+    <div id="vk-demo-2"></div>
+    <p class="hint">
+      自动演示按键 <kbd>Y</kbd>：键盘高亮 + 正确手势（右手食指），不响应真实键盘输入
+    </p>
+  </main>
+
+  <main class="demo-card">
+    <h2 class="demo-title">实例 3 · 连续按键演示 hello（关闭键盘监听）</h2>
+    <div id="vk-demo-3"></div>
+    <p class="hint">
+      自动连续演示按键 <kbd>h</kbd> <kbd>e</kbd> <kbd>l</kbd> <kbd>l</kbd> <kbd>o</kbd>：
+      逐键键盘高亮 + 正确手势
+    </p>
+  </main>
+
+  <script src="./dist/vkeyboardhand.umd.js"></script>
+  <script src="./app/pwa.js" defer></script>
+  <script>
+    var instance = VKeyboardHand.create('#vk-demo', {
+      keyboard: './svg/keyboard.svg',
+      hand: './svg/hand.svg',
+      theme: 'colorful',
+      listenKeyboard: true,
+      enableClick: true,
+      preventScroll: true,
+      showFingerLabel: true,
+      onReady: function (kb) {
+        var auto = new URLSearchParams(location.search).get('press');
+        if (auto) {
+          kb.press(auto);
+          if (new URLSearchParams(location.search).get('hold') !== '1') {
+            setTimeout(function () { kb.release(auto); }, 2500);
+          }
+        }
+      }
+    });
+
+    var demo2 = VKeyboardHand.create('#vk-demo-2', {
+      keyboard: './svg/keyboard.svg',
+      hand: './svg/hand.svg',
+      theme: 'colorful',
+      listenKeyboard: false,
+      enableClick: false,
+      showHandBoth: false,
+      showFingerLabel: true,
+      onReady: function (kb) {
+        kb.press('y');
+      }
+    });
+
+    var demo3 = VKeyboardHand.create('#vk-demo-3', {
+      keyboard: './svg/keyboard.svg',
+      hand: './svg/hand.svg',
+      theme: 'colorful',
+      listenKeyboard: false,
+      enableClick: false,
+      showHandBoth: false,
+      showFingerLabel: true,
+      onReady: function (kb) {
+        kb.play('hello', { pressTime: 450, gap: 120, loop: true });
+      }
+    });
+
+    document.querySelectorAll('[data-theme]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-theme]').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        instance.setTheme(btn.getAttribute('data-theme'));
+      });
+    });
+
+    var clickOn = true;
+    document.getElementById('btn-click').addEventListener('click', function () {
+      clickOn = !clickOn;
+      instance.setClickEnabled(clickOn);
+      this.textContent = '点击演示：' + (clickOn ? '开' : '关');
+    });
+
+    var handBothOn = false;
+    document.getElementById('btn-hand-both').addEventListener('click', function () {
+      handBothOn = !handBothOn;
+      instance.setShowHandBoth(handBothOn);
+      this.textContent = '双手常显：' + (handBothOn ? '关' : '开');
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', function () {
+      instance.reset();
+    });
+  </script>
+</body>
+</html>

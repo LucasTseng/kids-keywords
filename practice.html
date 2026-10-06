@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>练习中</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="打字练习">
+  <link rel="stylesheet" href="app/style.css">
+  <link rel="stylesheet" href="dist/vkeyboardhand.css">
+</head>
+<body>
+  <div class="practice">
+    <div class="practice-body">
+      <button class="side-btn prev" id="btn-prev" aria-label="上一题">←</button>
+      <div id="stage"></div>
+      <button class="side-btn next" id="btn-next" aria-label="下一题">→</button>
+    </div>
+
+    <div class="practice-keyboard" id="keyboard">
+      <div class="empty-tip">键盘组件加载中…</div>
+    </div>
+  </div>
+
+  <script src="dist/vkeyboardhand.umd.js"></script>
+  <script src="vendor/sql-wasm-browser.js"></script>
+  <script src="app/pwa.js" defer></script>
+  <script type="module" src="app/practice.js"></script>
+</body>
+</html>

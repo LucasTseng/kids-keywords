@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  icon-maskable.svg —— 应用图标源图（满幅版，用于 Android maskable 图标与 iOS apple-touch-icon）
+  与 icon.svg 构图一致，区别是背景铺满整个画布（直角），由系统自行裁剪为圆形/圆角；
+  全部主体内容位于中心 80% 安全区内。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bgM" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="0.55" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景（满幅，不透明） -->
+  <rect x="0" y="0" width="1024" height="1024" fill="url(#bgM)"/>
+
+  <!-- 触控波纹 -->
+  <circle cx="471.8" cy="560" r="98" fill="none" stroke="#ffffff" stroke-opacity="0.30" stroke-width="10"/>
+
+  <!-- 键盘白卡 -->
+  <rect x="152" y="486" width="720" height="330" rx="52" fill="#ffffff"/>
+
+  <!-- 第一排键帽（8 个） -->
+  <g fill="#2563eb">
+    <rect x="198"    y="532" width="62.8" height="64" rx="16"/>
+    <rect x="278.8"  y="532" width="62.8" height="64" rx="16"/>
+    <rect x="359.6"  y="532" width="62.8" height="64" rx="16"/>
+    <rect x="440.4"  y="532" width="62.8" height="64" rx="16"/>
+    <rect x="521.2"  y="532" width="62.8" height="64" rx="16"/>
+    <rect x="602"    y="532" width="62.8" height="64" rx="16"/>
+    <rect x="682.8"  y="532" width="62.8" height="64" rx="16"/>
+    <rect x="763.6"  y="532" width="62.8" height="64" rx="16"/>
+  </g>
+
+  <!-- 第二排键帽：第 4 个为琥珀色高亮（被按下的键） -->
+  <g fill="#2563eb">
+    <rect x="198"    y="618" width="62.8" height="64" rx="16"/>
+    <rect x="278.8"  y="618" width="62.8" height="64" rx="16"/>
+    <rect x="359.6"  y="618" width="62.8" height="64" rx="16"/>
+    <rect x="521.2"  y="618" width="62.8" height="64" rx="16"/>
+    <rect x="602"    y="618" width="62.8" height="64" rx="16"/>
+    <rect x="682.8"  y="618" width="62.8" height="64" rx="16"/>
+    <rect x="763.6"  y="618" width="62.8" height="64" rx="16"/>
+  </g>
+  <rect x="440.4" y="624" width="62.8" height="64" rx="16" fill="#f59e0b"/>
+
+  <!-- 底排：两个小键 + 长空格 + 两个小键 -->
+  <g fill="#2563eb">
+    <rect x="198"   y="704" width="62.8" height="64" rx="16"/>
+    <rect x="278.8" y="704" width="62.8" height="64" rx="16"/>
+    <rect x="359.6" y="704" width="304.8" height="64" rx="16"/>
+    <rect x="682.4" y="704" width="62.8" height="64" rx="16"/>
+    <rect x="763.2" y="704" width="62.8" height="64" rx="16"/>
+  </g>
+
+  <!-- 指尖（点按高亮键，淡蓝描边使其在白色卡面上也有轮廓） -->
+  <circle cx="471.8" cy="558" r="64" fill="#ffffff" stroke="#a9c4ef" stroke-width="6"/>
+  <ellipse cx="455" cy="538" rx="20" ry="13" fill="#dbeafe"/>
+</svg>

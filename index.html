@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kids-keywords · 英语打字背默</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="打字练习">
+  <link rel="stylesheet" href="app/style.css">
+</head>
+<body>
+  <div class="home">
+    <h1 class="home-title">⌨️ kids-keywords</h1>
+    <p class="home-subtitle">小朋友入门 · 沪教版上海小学 1–3 年级英语核心词汇与句型</p>
+
+    <div class="card">
+      <!-- 筛选字段由 home.js 依据题库字段动态渲染（年级 / 所属单元 / 动态字段） -->
+      <div id="filter-fields"></div>
+
+      <span class="field-label">选择学习方式</span>
+      <div class="mode-group">
+        <label class="mode-option">
+          <input type="radio" name="mode" value="typing" checked>
+          <span>
+            <span class="mode-name">⌨️ 打字练习</span>
+            <span class="mode-desc">看英文打字，实时指法联动</span>
+          </span>
+        </label>
+        <label class="mode-option">
+          <input type="radio" name="mode" value="dictation">
+          <span>
+            <span class="mode-name">✍️ 背默练习</span>
+            <span class="mode-desc">看中文默写英文，计时评分</span>
+          </span>
+        </label>
+      </div>
+
+      <span class="field-label hidden" id="order-label">出题顺序</span>
+      <div class="count-group hidden" id="order-group">
+        <label class="count-option"><input type="radio" name="order" value="sequential" checked><span>默认顺序</span></label>
+        <label class="count-option"><input type="radio" name="order" value="random"><span>随机顺序</span></label>
+      </div>
+
+      <span class="field-label hidden" id="count-label">挑战词句数量</span>
+      <div class="count-group hidden" id="count-group">
+        <label class="count-option"><input type="radio" name="count" value="20" checked><span>20</span></label>
+        <label class="count-option"><input type="radio" name="count" value="30"><span>30</span></label>
+        <label class="count-option"><input type="radio" name="count" value="50"><span>50</span></label>
+      </div>
+
+      <div class="home-actions">
+        <button class="btn btn-primary" id="btn-start" disabled>开始练习</button>
+      </div>
+    </div>
+
+    <div class="home-links">
+      <a class="btn btn-ghost" href="help.html">📖 帮助</a>
+      <a class="btn btn-ghost" href="data.html">📂 数据维护</a>
+      <a class="btn btn-ghost" href="history.html">📊 历史成绩</a>
+    </div>
+  </div>
+
+  <script src="vendor/sql-wasm-browser.js"></script>
+  <script src="app/pwa.js" defer></script>
+  <script type="module" src="app/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史成绩</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="打字练习">
+  <link rel="stylesheet" href="app/style.css">
+</head>
+<body>
+  <div class="history">
+    <div class="card">
+      <div class="history-head">
+        <h1>📊 历史成绩</h1>
+        <button class="btn btn-danger" id="btn-clear">清空记录</button>
+      </div>
+      <div id="score-list"></div>
+    </div>
+    <div class="result-actions" style="margin-top: 20px;">
+      <a class="btn btn-primary" href="index.html">← 返回首页</a>
+    </div>
+  </div>
+
+  <script src="vendor/sql-wasm-browser.js"></script>
+  <script src="app/pwa.js" defer></script>
+  <script type="module" src="app/history.js"></script>
+</body>
+</html>
