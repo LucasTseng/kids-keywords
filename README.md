@@ -1,357 +1,94 @@
+# ⌨️ kids-keywords · Kids English Vocabulary Typing & Dictation
 
-
-# ⌨️ kids-keywords
-
-Kids-friendly English vocabulary typing & dictation app for Shanghai primary grades 1–3.
-
-An interactive English word & sentence learning app: type English by reading English, and spell English by reading Chinese — with real-time touch-typing fingering guidance. Built on the open-source [vkeyboardhand](https://github.com/ayuday/vkeyboardhand) component (MIT License).
+An English vocabulary & sentence learning app for kids (Shanghai primary school grades 1–3): **read English and type it, read Chinese and spell it** — with real-time touch-typing fingering guidance. Fully offline, no login, no backend.
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/vkeyboardhand" target="_blank"><img src="https://img.shields.io/npm/v/vkeyboardhand" alt="npm version"></a>
-  <img src="https://img.shields.io/npm/dm/vkeyboardhand" alt="npm downloads">
-  <img src="https://data.jsdelivr.com/v1/package/npm/vkeyboardhand/badge" alt="jsDelivr CDN version">
-  <img src="https://img.shields.io/npm/l/vkeyboardhand" alt="License MIT">
-  <img src="https://img.shields.io/badge/pure_JS-zero_dependency-4fc08d" alt="pure JS zero dependency">
+  <img src="./assets/vkeyboardhand.gif" alt="Fingering linkage demo" />
 </p>
 
 [English](README.md) | [简体中文](README_zh.md)
 
-<p align="center">
-  <img src="./assets/vkeyboardhand.jpg" alt="vkeyboardhand"  />
-</p>
-<p align="center">
-  <img src="./assets/vkeyboardhand.gif" alt="vkeyboardhand"  />
-</p>
-
-
-
 ## Features
 
-- 🎹 SVG keyboard + 🖐 SVG hand-gesture linkage: press a real key (or click a key) and the matching key lights up, the hand gesture switches in sync, and a finger-hint bar shows "which finger presses which key" in real time.
-- ⌨️ `KeyboardEvent`-driven: listens to `keydown` / `keyup`, supports combo gestures like `Shift` / `Alt`.
-- 🎨 Rainbow color scheme (default theme): keys are colored by finger zones, cold on the left and warm on the right to form a rainbow gradient (see `colorful.md` for the color conventions).
-- 🧩 Framework-agnostic: the component only manipulates the DOM, depends on no framework, and works directly in Vue / React / Angular.
-- 📦 Three import methods: local `<script>`, CDN, npm + ESM.
-- ⚙️ Full API: `press / release / play / reset / setTheme / setClickEnabled / getState / destroy` plus event callbacks.
-- 🗂 Key mapping table (data layer): a three-layer `key → finger → SVG id` mapping that can be overridden via config.
+- 📖 **Typing Practice** — read English, type English, checked character by character: correct characters turn green and advance, wrong ones flash red and block progress; auto-jumps to the next item when complete, building ten-finger technique and spelling fluency
+- ✍️ **Dictation Practice** — only the Chinese translation is shown; the English answer appears as same-length underscore placeholders (spaces and punctuation included), typed character by character; the timer starts on entry and stops on submit, each item scored
+- 🖐 **Real-time Fingering Guidance** — powered by the open-source vkeyboardhand component: pressing a real key lights up the matching on-screen key and switches the hand-gesture diagram in sync, showing "which finger presses which key" in real time
+- 📊 **Scores & History** — after submitting a dictation, wrong answers are shown aligned line by line (correct text vs. your input, differing characters highlighted in red) with a percentage score and elapsed time; the history page lists past scores newest-first and supports clearing
+- 📂 **Vocabulary Maintenance** — batch import / export via Excel (download a template, upload to replace the whole bank); add, edit and remove items without touching any code
+- 🎯 **Dynamic Filters** — filter questions by grade / unit / custom fields (e.g. part of speech, topic); filter widgets are generated automatically from the actual fields in your vocabulary
+- 📱 **Offline PWA** — install to the home screen and use it like a native app (Android / iPad tablets), fully offline
+- 💻 **Desktop Builds** — Windows installer & portable edition; macOS DMG built in the cloud via GitHub Actions
+- 🔒 **Local-first Data** — vocabulary and scores stay in the browser (sql.js + IndexedDB): no accounts, no backend, no login
+
+## Pages & Usage
+
+| Page | Description |
+| --- | --- |
+| Home `index.html` | Pick grades (multi-select), learning mode (typing / dictation) and dictation challenge count (20 / 30 / 50); filter by unit and dynamic fields (part of speech, topic, etc.); entries to History and Data Maintenance |
+| Practice `practice.html` | Two modes (typing / dictation); back button on top, virtual keyboard at the bottom with real-time fingering linkage; switch items via side buttons or arrow keys |
+| Result (inside practice) | After a dictation is submitted: percentage score, elapsed time and character-by-character comparison of wrong answers |
+| History `history.html` | Review past scores newest-first (username, mode, grades, count, score, duration, time); supports clearing all records |
+| Data Maintenance `data.html` | Download the Excel template, export the current vocabulary, or import an Excel file to replace the whole bank (with stats & preview) |
+| Help `help.html` | Demo and usage notes for the vkeyboardhand component |
 
 ## Tech Stack
 
-- **SVG (injected inline)**: keyboard diagram + finger gesture diagram
-- **JavaScript DOM manipulation**: controls SVG element visibility and styles
-- **KeyboardEvent API**: listens to user key presses
-- **CSS Transition / Animation**: key-press animations, highlight transitions
-- **Key mapping table (data)**: `key → finger → SVG id` correspondences
-- **fetch / inline**: loads SVG files
+- **vkeyboardhand** (MIT License): virtual keyboard + hand-gesture fingering component, reused on the practice page for key highlighting and finger hints
+- **sql.js + IndexedDB**: SQLite running in the browser; vocabulary and scores persist locally across sessions
+- **SheetJS (xlsx)**: Excel template download, vocabulary import / export
+- **Service Worker**: PWA offline caching — works without network once installed
+- **Electron**: Windows / macOS desktop shell (custom `app://` protocol serving the static site)
 
-## Installation
-
-### Method 1: Pure HTML + JS (local import / CDN)
-
-```html
-<!-- Component styles -->
-<link rel="stylesheet" href="dist/vkeyboardhand.css">
-<!-- Component script (UMD, mounted as window.VKeyboardHand) -->
-<script src="dist/vkeyboardhand.umd.js"></script>
-
-<div id="demo"></div>
-
-<script>
-  var kb = VKeyboardHand.create('#demo', {
-    keyboard: './svg/keyboard.svg', // keyboard SVG (URL / inline string / SVGElement)
-    hand: './svg/hand.svg'          // hand-gesture SVG
-  });
-</script>
-```
-
-Once published to npm, it can be used directly from a CDN (jsDelivr / unpkg):
-
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vkeyboardhand@latest/dist/vkeyboardhand.css">
-<script src="https://cdn.jsdelivr.net/npm/vkeyboardhand@latest/dist/vkeyboardhand.umd.js"></script>
-<!-- or -->
-<link rel="stylesheet" href="https://unpkg.com/vkeyboardhand@latest/dist/vkeyboardhand.css">
-<script src="https://unpkg.com/vkeyboardhand@latest/dist/vkeyboardhand.umd.js"></script>
-```
-
-> The keyboard and hand-gesture SVGs can be fetched from the package: `https://cdn.jsdelivr.net/npm/vkeyboardhand@latest/svg/keyboard.svg`, `.../svg/hand.svg`.
-
-### Method 2: npm install (Vue / React / Angular)
+## Development
 
 ```bash
-npm install vkeyboardhand
+pnpm install      # install dependencies
+pnpm build        # build vocabulary + sql.js runtime (generates data/vocabulary.sqlite and vendor/)
+pnpm icons        # generate app icons from SVG sources
+pnpm preview      # local preview at http://localhost:8011
+pnpm app          # run as an Electron desktop app
+pnpm app:win      # package for Windows (NSIS installer + portable)
+pnpm app:mac      # package for macOS (run on a Mac)
 ```
 
-```js
-// Import styles (in the entry file or a component)
-import 'vkeyboardhand/vkeyboardhand.css';
-// Import the component
-import VKeyboardHand from 'vkeyboardhand';
+> The local preview port is fixed at **8011**; this is a pure front-end project with no backend port.
 
-const kb = VKeyboardHand.create(document.getElementById('demo'), {
-  keyboard: '/assets/svg/keyboard.svg',
-  hand: '/assets/svg/hand.svg'
-});
-```
+## Cross-platform Installation
 
-> Note: `keyboard` / `hand` accept **SVG file URLs, SVG strings, or existing SVGElement** as sources. In bundlers you can also `import kbSvg from 'vkeyboardhand/svg/keyboard.svg?raw'` and pass the string directly.
-
-#### Vue 3
-
-```vue
-<template>
-  <div ref="host"></div>
-</template>
-
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import VKeyboardHand from 'vkeyboardhand';
-
-const host = ref(null);
-let kb = null;
-
-onMounted(() => {
-  kb = VKeyboardHand.create(host.value, {
-    keyboard: '/assets/svg/keyboard.svg',
-    hand: '/assets/svg/hand.svg'
-  });
-});
-
-onBeforeUnmount(() => kb && kb.destroy());
-</script>
-```
-
-#### React
-
-```jsx
-import { useEffect, useRef } from 'react';
-import VKeyboardHand from 'vkeyboardhand';
-
-export default function FingerTeaching() {
-  const host = useRef(null);
-
-  useEffect(() => {
-    const kb = VKeyboardHand.create(host.current, {
-      keyboard: '/assets/svg/keyboard.svg',
-      hand: '/assets/svg/hand.svg'
-    });
-    return () => kb.destroy();
-  }, []);
-
-  return <div ref={host} />;
-}
-```
-
-#### Angular
-
-```ts
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import VKeyboardHand from 'vkeyboardhand';
-
-@Component({
-  selector: 'app-finger-teaching',
-  template: `<div #host></div>`
-})
-export class FingerTeachingComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('host', { static: true }) host!: ElementRef<HTMLDivElement>;
-  private kb: VKeyboardHand | null = null;
-
-  ngAfterViewInit(): void {
-    this.kb = VKeyboardHand.create(this.host.nativeElement, {
-      keyboard: 'assets/svg/keyboard.svg',
-      hand: 'assets/svg/hand.svg'
-    });
-  }
-
-  ngOnDestroy(): void { this.kb?.destroy(); }
-}
-```
-
-> Fully runnable examples live in [`examples/`](./examples): `vue.html`, `react.html`, `esm.html`, `angular/app.component.ts`.
-
-## API Reference
-
-### Options
-
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `keyboard` | `string \| SVGElement` | `'./svg/keyboard.svg'` | Keyboard SVG: URL / inline string / element |
-| `hand` | `string \| SVGElement` | `'./svg/hand.svg'` | Hand-gesture SVG: URL / inline string / element |
-| `theme` | `string` | `'colorful'` | Theme: `colorful` (default rainbow) / `bone` / `dark` / `robot` / `kingfish` / `milk` |
-| `listenKeyboard` | `boolean` | `true` | Whether to listen to the real keyboard |
-| `enableClick` | `boolean` | `true` | Whether clicking keys is allowed for demo |
-| `preventScroll` | `boolean` | `true` | Prevent spacebar / arrow keys etc. from scrolling the page |
-| `showFingerLabel` | `boolean` | `true` | Show the finger-hint bar |
-| `showFingerColors` | `boolean` | `false` | Color keys by finger (on by default in the `colorful` theme, can be enabled manually in others) |
-| `showBanner` | `boolean` | `true` | Print a version + repository banner to the console after init |
-| `showHandBoth` | `boolean` | `true` | How natural hands are shown while a key is held: `true` keeps both neutral hands visible as a background next to the pressed gesture; `false` replaces the same-side neutral hand with the key gesture (hidden) while the opposite-side neutral hand stays visible; both neutral hands return after release |
-| `holdDelay` | `number` | `80` | Hand-gesture transition delay (ms) |
-| `keyboardClass` | `string` | `'standard-kb'` | Extra class name for the keyboard SVG |
-| `keyMap` | `object` | `KEY_MAP` | Override the `KeyboardEvent.code → key` mapping |
-| `fingerMap` | `object` | `FINGER_MAP` | Override the `key → finger` mapping |
-| `onReady(kb)` | `function` | - | Fires when the component has loaded and rendered |
-| `onKeyDown(info, kb)` | `function` | - | Key-down callback |
-| `onKeyUp(info, kb)` | `function` | - | Key-up callback |
-| `onKeyClick(info, kb)` | `function` | - | Key-click callback |
-| `onError(err)` | `function` | - | Load / render error callback |
-
-### Instance Methods
-
-| Method | Description |
+| Platform | Method |
 | --- | --- |
-| `press(key, meta?)` | Press a specified key (`key` is the key name, e.g. `'q'`, `'shift-left'`) |
-| `release(key, meta?)` | Release a specified key |
-| `play(keys, options?)` | Play a sequence of keys (e.g. `kb.play('hello')`) with per-key `pressTime` (default 500ms) & gap (default 150ms), optional `loop` auto-repeat, and `onStep` callback; returns a Promise |
-| `reset()` | Reset all highlights and gestures (back to both hands' natural resting position) |
-| `setTheme(theme)` | Switch theme |
-| `setClickEnabled(bool)` | Enable / disable click-to-demo |
-| `setShowHandBoth(bool)` | Enable / disable keeping both neutral hands visible while pressing |
-| `getState()` | Get the list of currently held keys |
-| `getFinger(key)` | Get the finger info for a key |
-| `destroy()` | Destroy the component, release listeners and DOM |
+| Windows | installer / portable exe under `release/` |
+| macOS | DMG built on GitHub Actions mac runners |
+| Android tablet | Chrome / Edge → visit the deployed site → "Add to Home screen" |
+| iPad | Safari → visit the deployed site → Share → "Add to Home Screen" |
 
-Example callback payload:
+See [docs/INSTALL.md](./docs/INSTALL.md) for details.
 
-```js
-{
-  key: 'q',            // key name
-  code: 'q',           // compatibility field
-  finger: 'lp',        // finger id
-  fingerName: 'left pinky', // finger name
-  held: ['q']          // all keys currently held
-}
-```
-
-### Finger IDs and Colors
-
-| finger id | Meaning | Default color |
-| --- | --- | --- |
-| `lp` | left pinky | `#ff9f43` |
-| `lr` | left ring finger | `#f368e0` |
-| `lm` | left middle finger | `#17c0eb` |
-| `li` | left index finger | `#1dd1a1` |
-| `ri` | right index finger | `#0abde3` |
-| `rm` | right middle finger | `#a29bfe` |
-| `rr` | right ring finger | `#fd79a8` |
-| `rp` | right pinky | `#fdcb6e` |
-| `th` | thumb (spacebar) | `#6c5ce7` |
-
-Can be overridden via CSS variables:
-
-```css
-.vk-hand {
-  --vk-finger-lp: #ff6348;
-  --vk-accent: #38bdf8; /* key-press highlight color */
-}
-```
-
-### Rainbow Theme Colors (colorful.md conventions)
-
-In the default `colorful` theme, keycaps are colored by finger zone, with border / background colors from `colorful.md`:
-
-| Finger | Border color | Background color |
-| --- | --- | --- |
-| Left pinky | `#d6a0b9` pink | `#fff0f6` light pink |
-| Left ring | `#c6a4df` purple | `#f7efff` light purple |
-| Left middle | `#9fb4e3` blue-purple | `#eef4ff` light blue-purple |
-| Left index | `#83bec2` teal | `#eaf9f8` light teal |
-| Right index | `#8ac29c` green | `#eef9f1` light green |
-| Right middle | `#c2bb76` yellow-green | `#fffbe8` light yellow |
-| Right ring | `#d9aa71` orange | `#fff4e8` light orange |
-| Right pinky | `#d69a98` red | `#fff0ef` light red |
-| Thumb | `#9fa8b5` gray-blue | `#f2f4f7` light gray |
-
-Key state follows colorful.md priority: pressed (`#303a4a` dark gray-blue solid fill + white text) overrides the rainbow background. See [colorful.md](./colorful.md) for the full conventions.
-
-## Asset Files
-
-- `svg/keyboard.svg`: virtual keyboard vector graphic
-- `keyboard.md`: mapping of `id` selectors in svg/keyboard.svg to physical keyboard keys
-- `colorful.md`: rainbow keyboard style conventions (finger-zone colors and key-state override colors)
-- `keyboard.html`: style preview of the virtual keyboard vector graphic
-- `svg/hand.svg`: keyboard hand-gesture vector graphic
-- `hand.md`: mapping of `id` selectors in svg/hand.svg to physical keyboard key gestures
-- `keyboard+hand.html`: style preview of the virtual keyboard + hand-gesture graphics
-- `letter-bg-*`: keyboard key backgrounds (`<path id="letter-bg-q">`)
-- `letters-*` / `letter-*`: letters or characters on keyboard keys (`<text id="letter-lower-q">`)
-- `hand-*`: hand-gesture groups (`<g id="hand-q">`); the component toggles the visibility of these groups for gesture linkage
-
-## Key Mapping (Data Layer)
-
-The component has two built-in layers of mapping:
+## Directory Structure
 
 ```text
-KeyboardEvent.code  →  key name           (e.g. KeyQ → q)
-key name            →  finger / SVG id    (e.g. q → lp → letter-bg-q / hand-q)
-```
-
-The default mappings live in `KEY_MAP` and `FINGER_MAP` in the source [`src/vkeyboardhand.js`](./src/vkeyboardhand.js), and can be overridden via `options.keyMap` / `options.fingerMap`:
-
-```js
-const kb = VKeyboardHand.create('#demo', {
-  fingerMap: { q: 'li' } // custom: remap q to the left index finger
-});
-```
-
-## Development & Build
-
-```bash
-pnpm install        # install dev dependencies (currently 0, pure Node build)
-pnpm build      # generate dist/ (UMD + ESM + CSS)
-pnpm preview    # local preview of index.html at http://localhost:8011
-```
-
-> **Port requirement**: the local preview is fixed to **8011** (assigned to this project in AI Studio `PROJECTS.md`); `pnpm preview` runs `npx serve . -l 8011`. This is a pure front-end project — no backend port (3011 is skipped).
-
-## Directory structure:
-
-```text
-├── src/
-│   ├── vkeyboardhand.js     # component source (UMD, can be included via <script>)
-│   └── vkeyboardhand.css    # component styles
-├── dist/
-│   ├── vkeyboardhand.umd.js # UMD build (browser / CommonJS / AMD)
-│   ├── vkeyboardhand.esm.mjs# ESM build (Vite / Webpack / Rollup / Node)
-│   └── vkeyboardhand.css    # CSS build
-├── examples/                # Vue / React / Angular / ESM examples
-├── app/                      # typing & dictation app scripts and styles
-│   ├── data-maintain.js      # data maintenance page script (Excel import/export, statistics & preview)
-│   ├── xlsx-io.js            # Excel import/export helper (SheetJS: template download / export / upload parse)
-│   └── pwa.js                # registers the Service Worker (PWA offline cache)
-├── electron/
-│   └── main.cjs              # Electron desktop main process (serves the site via a custom app:// protocol)
-├── scripts/
-│   ├── build.mjs             # build the component dist
-│   ├── build-vocabulary.mjs  # build the question-bank sqlite
-│   └── generate-icons.mjs    # rasterize SVG sources into multi-size PNG icons
-├── docs/                     # docs: PRD.md / SDD.md / INSTALL.md (cross-platform install guide)
-├── svg/                      # keyboard & gesture vector assets (keyboard.svg / hand.svg)
-├── icons/                    # app icons: SVG sources & multi-size PNGs (PWA / iOS / Electron)
-├── build/icon.png            # electron-builder source icon (1024px, generated)
-├── colorful.md               # rainbow keyboard style conventions
-├── data/vocabulary.sqlite    # question bank (build output)
-├── vendor/                   # sql.js & SheetJS runtimes (build output)
-├── manifest.webmanifest      # PWA manifest (name, icons, theme color, etc.)
-├── sw.js                     # Service Worker: precaches all assets for offline use
-├── index.html                # app home page
-├── practice.html             # practice page
-├── help.html                 # help page
-├── history.html              # score history page
-├── data.html                 # data maintenance page (Excel bulk add/edit/delete question bank)
+├── app/                      # app scripts & styles
+│   ├── home.js / practice.js # home / practice page logic
+│   ├── typing.js / dictation.js # typing / dictation practice engines
+│   ├── db.js / store.js      # sql.js wrapper + IndexedDB persistence
+│   ├── data-maintain.js / xlsx-io.js # data maintenance page + Excel import/export
+│   └── pwa.js                # service worker registration (offline cache)
+├── src/ + dist/              # vkeyboardhand fingering component source & build
+├── svg/                      # keyboard / hand-gesture vector assets
+├── electron/main.cjs         # Electron main process (app:// protocol)
+├── scripts/                  # component build, vocabulary build, icon generation
+├── docs/                     # PRD / SDD / INSTALL (cross-platform install guide)
+├── icons/                    # PWA / iOS / Electron app icons
+├── index.html / practice.html / help.html / history.html / data.html
+├── manifest.webmanifest      # PWA manifest
+├── sw.js                     # service worker offline cache
 └── package.json
 ```
 
-
-
-## Browser Support
-
-Supports all modern browsers (Chrome / Edge / Firefox / Safari), relying on standard APIs: `fetch`, `DOMParser`, `classList`, `KeyboardEvent`.
-
-
 ## Acknowledgements
-- [vkeyboardhand](https://github.com/ayuday/vkeyboardhand) — interactive virtual-keyboard touch-typing teaching component (MIT License, by [ayuday](https://github.com/ayuday)). This project integrates and adapts vkeyboardhand for the practice page's keyboard & hand-gesture display.
-- [SVG keyboard](https://commons.wikimedia.org/wiki/File:Keyboard_US.svg) (Wikimedia Commons, CC BY-SA 4.0)
-- [nvm](https://www.nvmnode.com) (NVM - Node.js Version Manager Tool)
+
+- [vkeyboardhand](https://github.com/ayuday/vkeyboardhand) (MIT License): interactive virtual-keyboard touch-typing component, integrated on the practice page for keyboard & hand-gesture linkage
+- [SVG keyboard image](https://commons.wikimedia.org/wiki/File:Keyboard_US.svg) (Wikimedia Commons, CC BY-SA 4.0)
 
 ## License
 

@@ -29,6 +29,17 @@
 | PWA 名称 | `manifest.webmanifest` | `打字 · 背默练习` | `kids-keywords 英语打字背默` |
 | 缓存版本名 | `sw.js` | `vkeyboardhand-v1.0.7` | `kids-keywords-v1.0.7` |
 
+### 变更（README 重写：以本项目功能为主体）
+
+- 问题描述：原 README 主体为上游 vkeyboardhand 组件的 API 文档（安装方式、Options 表、实例方法表、手指配色、Vue/React/Angular 示例等），本项目自身功能仅开头一句话带过，GitHub 首页无法了解应用实际功能
+- 修复方法：以 `docs/PRD.md` 的 8 大模块功能为依据，完整重写中英文 README——功能特性 9 条（打字练习、背默练习、实时指法联动、成绩与历史、题库维护、动态筛选、离线 PWA、桌面版、数据本地化）、页面与用法表格、技术栈、本地开发、跨平台安装、目录结构；组件内容仅保留「技术栈」「鸣谢」中的合理引用
+- 验证结果：`README.md` 与 `README_zh.md` 结构一一对应，无原作者域名等遗留信息，仅保留鸣谢链接
+
+| 作用描述 | 文件名 | 修复前 | 修复后 |
+| --- | --- | --- | --- |
+| 英文说明文档 | `README.md` | vkeyboardhand 组件 API 文档为主体 | kids-keywords 应用功能文档为主体 |
+| 中文说明文档 | `README_zh.md` | vkeyboardhand 组件 API 文档为主体 | kids-keywords 应用功能文档为主体 |
+
 ## 2026-10-03
 
 ### 功能新增（Excel 批量维护题库 + 动态筛选字段）
